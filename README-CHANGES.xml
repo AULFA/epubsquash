@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<c:changelog project="org.aulfa.epubsquash" xmlns:c="urn:com.io7m.changelog:4.0">
+  <c:releases/>
+  <c:ticket-systems>
+    <c:ticket-system default="true" id="GitHub" url="https://www.github.com/AULFA/epubsquash"/>
+  </c:ticket-systems>
+</c:changelog>
