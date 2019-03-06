@@ -12,27 +12,27 @@
     <version>3.0.0-beta0019</version>
   </parent>
 
-  <groupId>org.aulfa</groupId>
-  <artifactId>org.aulfa.epubsquash</artifactId>
+  <groupId>au.org.libraryforall</groupId>
+  <artifactId>au.org.libraryforall.epubsquash</artifactId>
   <version>0.0.1</version>
   <packaging>pom</packaging>
 
-  <name>org.aulfa.epubsquash</name>
+  <name>au.org.libraryforall.epubsquash</name>
   <description>EPUB squashing tool</description>
   <url>http://github.com/AULFA/epubsquash</url>
 
   <modules>
-    <module>org.aulfa.epubsquash.tests</module>
-    <module>org.aulfa.epubsquash.api</module>
-    <module>org.aulfa.epubsquash.vanilla</module>
-    <module>org.aulfa.epubsquash.cmdline</module>
+    <module>au.org.libraryforall.epubsquash.tests</module>
+    <module>au.org.libraryforall.epubsquash.api</module>
+    <module>au.org.libraryforall.epubsquash.vanilla</module>
+    <module>au.org.libraryforall.epubsquash.cmdline</module>
   </modules>
 
   <properties>
     <io7m.api.previousVersion>0.0.1</io7m.api.previousVersion>
     <io7m.maven-surefire-plugin.version>3.0.0-M1</io7m.maven-surefire-plugin.version>
     <io7m.jacoco-maven-plugin.version>0.8.2</io7m.jacoco-maven-plugin.version>
-    <org.aulfa.org.immutables.version>2.7.5</org.aulfa.org.immutables.version>
+    <au.org.libraryforall.org.immutables.version>2.7.5</au.org.libraryforall.org.immutables.version>
     <imageio-core.version>3.4.1</imageio-core.version>
   </properties>
 
@@ -95,7 +95,7 @@
       <dependency>
         <groupId>org.immutables</groupId>
         <artifactId>value</artifactId>
-        <version>${org.aulfa.org.immutables.version}</version>
+        <version>${au.org.libraryforall.org.immutables.version}</version>
       </dependency>
       <dependency>
         <groupId>com.io7m.immutables.style</groupId>
