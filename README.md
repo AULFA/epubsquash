@@ -1,6 +1,9 @@
 epubsquash
 ===
 
+[![Maven Central](https://img.shields.io/maven-central/v/org.aulfa/org.aulfa.epubsquash.png?style=flat-square)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.aulfa%22)
+[![Maven Central (snapshot)](https://img.shields.io/nexus/s/https/oss.sonatype.org/org.aulfa/org.aulfa.epubsquash.svg?style=flat-square)](https://oss.sonatype.org/content/repositories/snapshots/org.aulfa/)
+
 A tool for making EPUB files smaller.
 
 ## Features
