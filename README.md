@@ -6,6 +6,8 @@ epubsquash
 
 A tool for making EPUB files smaller.
 
+![epubsquash](./src/site/resources/epubsquash.jpg?raw=true)
+
 ## Features
 
 * Squash images in EPUBs to reduce file sizes
