@@ -196,9 +196,8 @@ final class EPUBSquasher implements EPUBSquasherType
           }
 
           LOG.debug("copy: {} -> {}", entry.getName(), output_path);
-          try (var input = input_zip.getInputStream(entry)) {
-            Files.copy(input, output_path, REPLACE_EXISTING);
-          }
+          final var input = input_zip.getInputStream(entry);
+          Files.copy(input, output_path, REPLACE_EXISTING);
         }
 
         this.unpacked.put(entry.getName(), output_path);
