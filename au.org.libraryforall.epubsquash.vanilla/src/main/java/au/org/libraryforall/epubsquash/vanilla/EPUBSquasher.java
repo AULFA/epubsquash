@@ -141,7 +141,7 @@ final class EPUBSquasher implements EPUBSquasherType
       final var path = entry.getValue();
 
       if (this.image_squasher.isImage(path)) {
-        LOG.debug("squashing: {}", path);
+        LOG.info("squashing: {}", path);
 
         final var image = ImageIO.read(path.toFile());
 
