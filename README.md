@@ -1,6 +1,7 @@
 epubsquash
 ===
 
+[![Build Status](https://img.shields.io/travis/AULFA/epubsquash.svg?style=flat-square)](https://travis-ci.org/AULFA/epubsquash)
 [![Maven Central](https://img.shields.io/maven-central/v/au.org.libraryforall/au.org.libraryforall.epubsquash.png?style=flat-square)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22au.org.libraryforall%22)
 [![Maven Central (snapshot)](https://img.shields.io/nexus/s/https/oss.sonatype.org/au.org.libraryforall/au.org.libraryforall.epubsquash.svg?style=flat-square)](https://oss.sonatype.org/content/repositories/snapshots/au.org.libraryforall/)
 
