@@ -133,6 +133,52 @@ final class EPUBSquasher implements EPUBSquasherType
     repack(temp, this.configuration.outputFile());
   }
 
+  private static final class ImageSize
+  {
+    int width;
+    int height;
+
+    ImageSize(
+      final int inWidth,
+      final int inHeight)
+    {
+      this.width = inWidth;
+      this.height = inHeight;
+    }
+  }
+
+  private ImageSize calculateImageSize(
+    final Path path,
+    final int width,
+    final int height)
+  {
+    var mWidth = width;
+    var mHeight = height;
+
+    final var scale = this.configuration.scale();
+    if (scale != 1.0) {
+      mWidth = (int) ((double) width * scale);
+      mHeight = (int) ((double) height * scale);
+    }
+
+    final var aspect = (double) height / (double) width;
+    final var maxWidth = this.configuration.maximumImageWidth();
+    final var maxHeight = this.configuration.maximumImageHeight();
+    if ((double) mWidth > maxWidth && (double) mHeight > maxHeight) {
+      mHeight = (int) (mHeight * aspect);
+    }
+
+    LOG.debug(
+      "rescaling {}: {}x{} -> {}x{}",
+      path,
+      Double.valueOf((double) width),
+      Double.valueOf((double) height),
+      Double.valueOf((double) mWidth),
+      Double.valueOf((double) mHeight));
+
+    return new ImageSize(mWidth, mHeight);
+  }
+
   private void runImages(
     final EPUBSquasherConfiguration configuration)
     throws IOException
@@ -143,35 +189,17 @@ final class EPUBSquasher implements EPUBSquasherType
       if (this.image_squasher.isImage(path)) {
         LOG.info("squashing: {}", path);
 
-        final var image = ImageIO.read(path.toFile());
-
-        var width = (double) image.getWidth();
-        var height = (double) image.getHeight();
-        final var max_width = configuration.maximumImageWidth();
-        final var max_height = configuration.maximumImageHeight();
-        if (width > max_width && height > max_height) {
-          final var aspect = height / width;
-          final var new_width = max_width;
-          final var new_height = max_height * aspect;
-
-          LOG.debug(
-            "rescaling {}: {}x{} -> {}x{}",
-            path,
-            Double.valueOf(width),
-            Double.valueOf(height),
-            Double.valueOf(new_width),
-            Double.valueOf(new_height));
-
-          width = new_width;
-          height = new_height;
-        }
+        final var image =
+          ImageIO.read(path.toFile());
+        final var scaled =
+          this.calculateImageSize(path, image.getWidth(), image.getHeight());
 
         this.image_squasher.squashImage(
           path,
           path.resolveSibling("TMP_" + path.getFileName()),
           path,
-          width,
-          height);
+          (double) scaled.width,
+          (double) scaled.height);
       }
     }
   }

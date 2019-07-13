@@ -46,6 +46,9 @@ Usage: epubsquash [options] [command] [command options]
           --image-max-width
             The maximum width of images
             Default: 1600.0
+          --image-scale
+            The image scaling value
+            Default: 1.0
         * --input-file
             The EPUB file to squash
         * --output-file

@@ -32,6 +32,18 @@ public interface EPUBSquasherConfigurationType
   Path outputFile();
 
   /**
+   * Each image will be scaled by a given amount, where {@code 1.0} keeps the original size,
+   * {@code 0.5} scales by 50%, etc.
+   *
+   * @return The amount by which to scale the image
+   */
+
+  @Value.Default
+  default double scale() {
+    return 1.0;
+  }
+
+  /**
    * @return The maximum image width in pixels
    */
 
