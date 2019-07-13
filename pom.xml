@@ -14,7 +14,7 @@
 
   <groupId>au.org.libraryforall</groupId>
   <artifactId>au.org.libraryforall.epubsquash</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <packaging>pom</packaging>
 
   <name>au.org.libraryforall.epubsquash</name>

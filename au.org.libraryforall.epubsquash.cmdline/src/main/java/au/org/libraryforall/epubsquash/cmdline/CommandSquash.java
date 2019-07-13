@@ -26,6 +26,12 @@ final class CommandSquash extends CommandRoot
   Path output_file;
 
   @Parameter(
+    names = "--image-scale",
+    required = false,
+    description = "The image scaling value")
+  double image_scale = 1.0;
+
+  @Parameter(
     names = "--image-max-width",
     required = false,
     description = "The maximum width of images")
@@ -59,6 +65,7 @@ final class CommandSquash extends CommandRoot
           .setOutputFile(this.output_file)
           .setMaximumImageHeight(this.image_max_height)
           .setMaximumImageWidth(this.image_max_width)
+          .setScale(this.image_scale)
           .build());
 
     squasher.squash();
