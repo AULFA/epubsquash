@@ -8,7 +8,7 @@
   <parent>
     <groupId>au.org.libraryforall</groupId>
     <artifactId>au.org.libraryforall.epubsquash</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
   </parent>
 
   <artifactId>au.org.libraryforall.epubsquash.cmdline</artifactId>
