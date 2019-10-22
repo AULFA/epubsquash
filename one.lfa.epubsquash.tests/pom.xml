@@ -6,15 +6,15 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>au.org.libraryforall</groupId>
-    <artifactId>au.org.libraryforall.epubsquash</artifactId>
+    <groupId>one.lfa</groupId>
+    <artifactId>one.lfa.epubsquash</artifactId>
     <version>0.0.2</version>
   </parent>
 
-  <artifactId>au.org.libraryforall.epubsquash.tests</artifactId>
+  <artifactId>one.lfa.epubsquash.tests</artifactId>
   <packaging>jar</packaging>
 
-  <name>au.org.libraryforall.epubsquash.tests</name>
+  <name>one.lfa.epubsquash.tests</name>
   <description>EPUB squasher (Unit tests)</description>
   <url>http://www.github.com/AULFA/epubsquash</url>
 
@@ -25,12 +25,12 @@
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>au.org.libraryforall.epubsquash.api</artifactId>
+      <artifactId>one.lfa.epubsquash.api</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>au.org.libraryforall.epubsquash.vanilla</artifactId>
+      <artifactId>one.lfa.epubsquash.vanilla</artifactId>
       <version>${project.version}</version>
     </dependency>
 

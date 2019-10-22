@@ -6,15 +6,15 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>au.org.libraryforall</groupId>
-    <artifactId>au.org.libraryforall.epubsquash</artifactId>
+    <groupId>one.lfa</groupId>
+    <artifactId>one.lfa.epubsquash</artifactId>
     <version>0.0.2</version>
   </parent>
 
-  <artifactId>au.org.libraryforall.epubsquash.api</artifactId>
+  <artifactId>one.lfa.epubsquash.api</artifactId>
   <packaging>jar</packaging>
 
-  <name>au.org.libraryforall.epubsquash.api</name>
+  <name>one.lfa.epubsquash.api</name>
   <description>EPUB squasher (API)</description>
   <url>http://www.github.com/AULFA/epubsquash</url>
 
