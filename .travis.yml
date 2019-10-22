@@ -13,5 +13,5 @@ install: true
 
 script:
   - mvn --errors clean verify
-  - bash <(curl -s https://codecov.io/bash) -f ./au.org.libraryforall.epubsquash.tests/target/site/jacoco-aggregate/jacoco.xml
+  - bash <(curl -s https://codecov.io/bash) -f ./one.lfa.epubsquash.tests/target/site/jacoco-aggregate/jacoco.xml
 
