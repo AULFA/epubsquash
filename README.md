@@ -2,8 +2,8 @@ epubsquash
 ===
 
 [![Build Status](https://img.shields.io/travis/AULFA/epubsquash.svg?style=flat-square)](https://travis-ci.org/AULFA/epubsquash)
-[![Maven Central](https://img.shields.io/maven-central/v/au.org.libraryforall/au.org.libraryforall.epubsquash.png?style=flat-square)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22au.org.libraryforall%22)
-[![Maven Central (snapshot)](https://img.shields.io/nexus/s/https/oss.sonatype.org/au.org.libraryforall/au.org.libraryforall.epubsquash.svg?style=flat-square)](https://oss.sonatype.org/content/repositories/snapshots/au.org.libraryforall/)
+[![Maven Central](https://img.shields.io/maven-central/v/one.lfa/one.lfa.epubsquash.png?style=flat-square)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22one.lfa%22)
+[![Maven Central (snapshot)](https://img.shields.io/nexus/s/https/oss.sonatype.org/one.lfa/one.lfa.epubsquash.svg?style=flat-square)](https://oss.sonatype.org/content/repositories/snapshots/one.lfa/)
 
 A tool for making EPUB files smaller.
 
@@ -63,7 +63,7 @@ To squash an epub file `/tmp/input.epub`, writing the result to
 `/tmp/output.epub`:
 
 ```
-$ java -jar au.org.libraryforall.epubsquash.cmdline-0.0.1-main.jar \
+$ java -jar one.lfa.epubsquash.cmdline-0.0.1-main.jar \
   squash \
     --input-file /tmp/input.epub \
     --output-file /tmp/output.epub \
@@ -84,6 +84,6 @@ squash
 --verbose
 trace
 
-$ java -jar au.org.libraryforall.epubsquash.cmdline-0.0.1-main.jar @arguments.txt
+$ java -jar one.lfa.epubsquash.cmdline-0.0.1-main.jar @arguments.txt
 ```
 

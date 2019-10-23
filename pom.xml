@@ -8,31 +8,31 @@
 
   <parent>
     <groupId>com.io7m.primogenitor</groupId>
-    <artifactId>com.io7m.primogenitor</artifactId>
-    <version>3.0.0-beta0019</version>
+    <artifactId>com.io7m.primogenitor.full</artifactId>
+    <version>3.5.0</version>
   </parent>
 
-  <groupId>au.org.libraryforall</groupId>
-  <artifactId>au.org.libraryforall.epubsquash</artifactId>
-  <version>0.0.2</version>
+  <groupId>one.lfa</groupId>
+  <artifactId>one.lfa.epubsquash</artifactId>
+  <version>0.0.3</version>
   <packaging>pom</packaging>
 
-  <name>au.org.libraryforall.epubsquash</name>
+  <name>one.lfa.epubsquash</name>
   <description>EPUB squashing tool</description>
   <url>http://github.com/AULFA/epubsquash</url>
 
   <modules>
-    <module>au.org.libraryforall.epubsquash.tests</module>
-    <module>au.org.libraryforall.epubsquash.api</module>
-    <module>au.org.libraryforall.epubsquash.vanilla</module>
-    <module>au.org.libraryforall.epubsquash.cmdline</module>
+    <module>one.lfa.epubsquash.tests</module>
+    <module>one.lfa.epubsquash.api</module>
+    <module>one.lfa.epubsquash.vanilla</module>
+    <module>one.lfa.epubsquash.cmdline</module>
   </modules>
 
   <properties>
     <io7m.api.previousVersion>0.0.1</io7m.api.previousVersion>
     <io7m.maven-surefire-plugin.version>3.0.0-M1</io7m.maven-surefire-plugin.version>
     <io7m.jacoco-maven-plugin.version>0.8.2</io7m.jacoco-maven-plugin.version>
-    <au.org.libraryforall.org.immutables.version>2.7.5</au.org.libraryforall.org.immutables.version>
+    <one.lfa.org.immutables.version>2.7.5</one.lfa.org.immutables.version>
     <imageio-core.version>3.4.1</imageio-core.version>
   </properties>
 
@@ -95,7 +95,7 @@
       <dependency>
         <groupId>org.immutables</groupId>
         <artifactId>value</artifactId>
-        <version>${au.org.libraryforall.org.immutables.version}</version>
+        <version>${one.lfa.org.immutables.version}</version>
       </dependency>
       <dependency>
         <groupId>com.io7m.immutables.style</groupId>
