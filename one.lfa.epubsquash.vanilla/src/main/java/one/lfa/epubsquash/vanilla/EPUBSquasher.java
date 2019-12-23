@@ -1,5 +1,9 @@
 package one.lfa.epubsquash.vanilla;
 
+import java.nio.file.attribute.FileTime;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import one.lfa.epubsquash.api.EPUBSquasherConfiguration;
 import one.lfa.epubsquash.api.EPUBSquasherType;
 import org.slf4j.Logger;
@@ -30,6 +34,10 @@ import static java.util.zip.ZipFile.OPEN_READ;
 final class EPUBSquasher implements EPUBSquasherType
 {
   private static final Logger LOG = LoggerFactory.getLogger(EPUBSquasher.class);
+
+  private static final Instant TIMESTAMP =
+    LocalDateTime.of(2001, 1, 1, 0, 0, 0)
+      .toInstant(ZoneOffset.UTC);
 
   private final EPUBSquasherConfiguration configuration;
   private final AtomicBoolean squashed;
@@ -95,6 +103,9 @@ final class EPUBSquasher implements EPUBSquasherType
       entry.setCrc(crc32.getValue());
     }
 
+    entry.setCreationTime(FileTime.from(TIMESTAMP));
+    entry.setLastAccessTime(FileTime.from(TIMESTAMP));
+    entry.setLastModifiedTime(FileTime.from(TIMESTAMP));
     entry.setMethod(ZipEntry.DEFLATED);
     entry.setExtra(new byte[0]);
 
