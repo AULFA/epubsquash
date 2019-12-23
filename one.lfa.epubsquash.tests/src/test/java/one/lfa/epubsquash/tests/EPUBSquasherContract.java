@@ -142,5 +142,81 @@ public abstract class EPUBSquasherContract
     Assertions.assertEquals(hash0, hash1);
   }
 
+  /**
+   * Scaling images by 50% should result in the same epub each time.
+   *
+   * @throws Exception On errors
+   */
+
+  @Test
+  public void testUnpackScale50Deterministic()
+    throws Exception
+  {
+    final var squashers = this.createSquashers();
+
+    final var temp =
+      this.directory.resolve("tmp");
+    final var inputFile =
+      this.directory.resolve("input.epub");
+    final var outputFile0 =
+      this.directory.resolve("output0.epub");
+    final var outputFile1 =
+      this.directory.resolve("output1.epub");
+
+    Files.createDirectories(temp);
+
+    try (var stream = resource("pg27472-images.epub")) {
+      Files.copy(stream, inputFile);
+    }
+
+    final var configuration0 =
+      EPUBSquasherConfiguration.builder()
+        .setInputFile(inputFile)
+        .setOutputFile(outputFile0)
+        .setTemporaryDirectory(temp)
+        .setMaximumImageHeight(4000.0)
+        .setMaximumImageWidth(4000.0)
+        .setScale(0.5)
+        .build();
+
+    final var squasher0 = squashers.createSquasher(configuration0);
+    squasher0.squash();
+
+    /*
+     * Wait two seconds to increase the chances of there being timestamp
+     * differences in the created EPUB files.
+     */
+
+    try {
+      Thread.sleep(2000L);
+    } catch (final InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+
+    final var configuration1 =
+      EPUBSquasherConfiguration.builder()
+        .setInputFile(inputFile)
+        .setOutputFile(outputFile1)
+        .setTemporaryDirectory(temp)
+        .setMaximumImageHeight(4000.0)
+        .setMaximumImageWidth(4000.0)
+        .setScale(0.5)
+        .build();
+
+    final var squasher1 = squashers.createSquasher(configuration1);
+    squasher1.squash();
+
+    Assertions.assertTrue(Files.isRegularFile(outputFile0));
+    Assertions.assertTrue(Files.isRegularFile(outputFile1));
+
+    final var hash0 = hashOf(outputFile0);
+    final var hash1 = hashOf(outputFile1);
+
+    LOG.debug("outputFile0: {}", hash0);
+    LOG.debug("outputFile1: {}", hash1);
+
+    Assertions.assertEquals(hash0, hash1);
+  }
+
   protected abstract EPUBSquasherProviderType createSquashers();
 }
