@@ -1,19 +1,16 @@
 package one.lfa.epubsquash.vanilla;
 
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import one.lfa.epubsquash.api.EPUBSquasherConfiguration;
-import one.lfa.epubsquash.api.EPUBSquasherType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.imageio.ImageIO;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Objects;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -22,6 +19,11 @@ import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
+import javax.imageio.ImageIO;
+import one.lfa.epubsquash.api.EPUBSquasherConfiguration;
+import one.lfa.epubsquash.api.EPUBSquasherType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
@@ -47,7 +49,9 @@ final class EPUBSquasher implements EPUBSquasherType
   EPUBSquasher(
     final EPUBSquasherConfiguration in_configuration)
   {
-    this.configuration = Objects.requireNonNull(in_configuration, "configuration");
+    this.configuration = Objects.requireNonNull(
+      in_configuration,
+      "configuration");
     this.squashed = new AtomicBoolean(false);
     this.unpacked = new TreeMap<>();
     this.image_squasher = new ImageSquasher();
@@ -58,7 +62,11 @@ final class EPUBSquasher implements EPUBSquasherType
     final Path output_file)
     throws IOException
   {
-    try (var stream = Files.newOutputStream(output_file, WRITE, TRUNCATE_EXISTING, CREATE)) {
+    try (var stream = Files.newOutputStream(
+      output_file,
+      WRITE,
+      TRUNCATE_EXISTING,
+      CREATE)) {
       try (var zip_out = new ZipOutputStream(stream, UTF_8)) {
         final var copies =
           Files.walk(temp)
@@ -139,9 +147,44 @@ final class EPUBSquasher implements EPUBSquasherType
   {
     final var temp = this.configuration.temporaryDirectory();
     Files.createDirectories(temp);
-    this.runUnpack(temp);
-    this.runImages(this.configuration);
-    repack(temp, this.configuration.outputFile());
+
+    try {
+      this.runUnpack(temp);
+      this.runImages(this.configuration);
+      repack(temp, this.configuration.outputFile());
+    } finally {
+      deleteRecursive(temp);
+    }
+  }
+
+  private static void deleteRecursive(
+    final Path directory)
+    throws IOException
+  {
+    Files.walkFileTree(directory, new SimpleFileVisitor<>()
+    {
+      @Override
+      public FileVisitResult visitFile(
+        final Path file,
+        final BasicFileAttributes attrs)
+        throws IOException
+      {
+        LOG.debug("delete {}", file);
+        Files.delete(file);
+        return FileVisitResult.CONTINUE;
+      }
+
+      @Override
+      public FileVisitResult postVisitDirectory(
+        final Path dir,
+        final IOException exc)
+        throws IOException
+      {
+        LOG.debug("delete {}", dir);
+        Files.delete(dir);
+        return FileVisitResult.CONTINUE;
+      }
+    });
   }
 
   private static final class ImageSize
@@ -219,7 +262,9 @@ final class EPUBSquasher implements EPUBSquasherType
     final Path temp)
     throws IOException
   {
-    try (var input_zip = new ZipFile(this.configuration.inputFile().toFile(), OPEN_READ)) {
+    try (var input_zip = new ZipFile(
+      this.configuration.inputFile().toFile(),
+      OPEN_READ)) {
       final var entries = input_zip.entries();
       while (entries.hasMoreElements()) {
         final var entry = entries.nextElement();
