@@ -4,8 +4,10 @@
     <c:release date="2021-01-28T00:00:00+00:00" is-open="false" ticket-system="GitHub" version="1.0.0">
       <c:changes/>
     </c:release>
-    <c:release date="2021-01-28T12:48:05+00:00" is-open="true" ticket-system="GitHub" version="1.0.1">
-      <c:changes/>
+    <c:release date="2021-01-28T12:48:41+00:00" is-open="true" ticket-system="GitHub" version="1.0.1">
+      <c:changes>
+        <c:change date="2021-01-28T12:48:41+00:00" summary="Adjust code for better behaviour under Windows"/>
+      </c:changes>
     </c:release>
   </c:releases>
   <c:ticket-systems>
