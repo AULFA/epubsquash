@@ -43,7 +43,12 @@ public final class EPUBDeletionVisitor extends SimpleFileVisitor<Path>
     throws IOException
   {
     this.logger.debug("delete {}", file);
-    Files.delete(file);
+    try {
+      Files.delete(file);
+    } catch (final IOException e) {
+      this.logger.error("delete {} failed: ", file, e);
+      throw e;
+    }
     return FileVisitResult.CONTINUE;
   }
 
@@ -54,7 +59,12 @@ public final class EPUBDeletionVisitor extends SimpleFileVisitor<Path>
     throws IOException
   {
     this.logger.debug("delete {}", dir);
-    Files.delete(dir);
+    try {
+      Files.delete(dir);
+    } catch (final IOException e) {
+      this.logger.error("delete {} failed: ", dir, e);
+      throw e;
+    }
     return FileVisitResult.CONTINUE;
   }
 }

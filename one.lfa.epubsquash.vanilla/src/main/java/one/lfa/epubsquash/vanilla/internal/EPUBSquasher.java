@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
@@ -121,9 +120,15 @@ public final class EPUBSquasher implements EPUBSquasherType
     entry.setSize(size);
 
     final var crc32 = new CRC32();
-    try (var channel = FileChannel.open(copy.input, READ)) {
-      final var map = channel.map(FileChannel.MapMode.READ_ONLY, 0L, size);
-      crc32.update(map);
+    final var buffer = new byte[8192];
+    try (var stream = Files.newInputStream(copy.input, READ)) {
+      while (true) {
+        final var r = stream.read(buffer);
+        if (r == -1) {
+          break;
+        }
+        crc32.update(buffer, 0, r);
+      }
       entry.setCrc(crc32.getValue());
     }
 
