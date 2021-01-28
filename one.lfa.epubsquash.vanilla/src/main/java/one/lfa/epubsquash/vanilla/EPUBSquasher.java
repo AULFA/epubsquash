@@ -275,8 +275,10 @@ final class EPUBSquasher implements EPUBSquasherType
         } else {
           final var parent = output_path.getParent();
           if (parent != null) {
-            LOG.debug("mkdir: {}", parent);
-            Files.createDirectories(parent);
+            if ( ! Files.exists(parent)) {
+              LOG.debug("mkdir: {}", parent);
+              Files.createDirectories(parent);
+            }
           }
 
           LOG.debug("copy: {} -> {}", entry.getName(), output_path);
