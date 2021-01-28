@@ -1,8 +1,8 @@
 epubsquash
 ===
 
-[![Maven Central](https://img.shields.io/maven-central/v/one.lfa.epubsquash/one.lfa.epubsquash.svg?style=flat-square)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22one.lfa.epubsquash%22)
-[![Maven Central (snapshot)](https://img.shields.io/nexus/s/https/oss.sonatype.org/one.lfa.epubsquash/one.lfa.epubsquash.svg?style=flat-square)](https://oss.sonatype.org/content/repositories/snapshots/com/AULFA/epubsquash/)
+[![Maven Central](https://img.shields.io/maven-central/v/one.lfa/one.lfa.epubsquash.svg?style=flat-square)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22one.lfa.epubsquash%22)
+[![Maven Central (snapshot)](https://img.shields.io/nexus/s/https/oss.sonatype.org/one.lfa/one.lfa.epubsquash.svg?style=flat-square)](https://oss.sonatype.org/content/repositories/snapshots/one/lfa/epubsquash/)
 [![Codecov](https://img.shields.io/codecov/c/github/AULFA/epubsquash.svg?style=flat-square)](https://codecov.io/gh/AULFA/epubsquash)
 
 ![epubsquash](./src/site/resources/epubsquash.jpg?raw=true)
