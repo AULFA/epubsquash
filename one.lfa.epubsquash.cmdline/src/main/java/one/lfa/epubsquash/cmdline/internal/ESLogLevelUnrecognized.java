@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-/**
- * EPUB squasher (Vanilla implementation)
- */
+package one.lfa.epubsquash.cmdline.internal;
 
-@Export
-package one.lfa.epubsquash.vanilla;
-
-import org.osgi.annotation.bundle.Export;
+public final class ESLogLevelUnrecognized extends RuntimeException
+{
+  ESLogLevelUnrecognized(final String message)
+  {
+    super(message);
+  }
+}

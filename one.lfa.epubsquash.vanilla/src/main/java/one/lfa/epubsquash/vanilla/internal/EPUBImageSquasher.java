@@ -1,4 +1,20 @@
-package one.lfa.epubsquash.vanilla;
+/*
+ * Copyright © 2019 Library For All
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package one.lfa.epubsquash.vanilla.internal;
 
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.resizers.configurations.Antialiasing;
@@ -15,13 +31,13 @@ import java.util.Set;
 import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
-final class ImageSquasher
+public final class EPUBImageSquasher
 {
-  private static final Logger LOG = LoggerFactory.getLogger(ImageSquasher.class);
+  private static final Logger LOG = LoggerFactory.getLogger(EPUBImageSquasher.class);
 
   private final Set<String> image_types;
 
-  ImageSquasher()
+  EPUBImageSquasher()
   {
     this.image_types = Set.of("image/jpeg");
   }
@@ -35,7 +51,8 @@ final class ImageSquasher
     throws IOException
   {
     Objects.requireNonNull(path, "path");
-    return Files.isRegularFile(path) && this.typeIsImage(Files.probeContentType(path));
+    return Files.isRegularFile(path) && this.typeIsImage(Files.probeContentType(
+      path));
   }
 
   void squashImage(

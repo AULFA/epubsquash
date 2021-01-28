@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
+package one.lfa.epubsquash.cmdline.internal;
+
+import java.util.concurrent.Callable;
+
 /**
- * EPUB squasher (Vanilla implementation)
+ * The type of command-line subcommands.
  */
 
-@Export
-package one.lfa.epubsquash.vanilla;
-
-import org.osgi.annotation.bundle.Export;
+public interface CommandType extends Callable<Void>
+{
+  // No extra methods
+}

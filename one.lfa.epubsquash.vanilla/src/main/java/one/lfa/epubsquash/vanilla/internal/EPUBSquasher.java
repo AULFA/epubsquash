@@ -1,12 +1,31 @@
-package one.lfa.epubsquash.vanilla;
+/*
+ * Copyright © 2019 Library For All
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+package one.lfa.epubsquash.vanilla.internal;
+
+import one.lfa.epubsquash.api.EPUBSquasherConfiguration;
+import one.lfa.epubsquash.api.EPUBSquasherType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -19,11 +38,6 @@ import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
-import javax.imageio.ImageIO;
-import one.lfa.epubsquash.api.EPUBSquasherConfiguration;
-import one.lfa.epubsquash.api.EPUBSquasherType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
@@ -33,7 +47,7 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.zip.ZipFile.OPEN_READ;
 
-final class EPUBSquasher implements EPUBSquasherType
+public final class EPUBSquasher implements EPUBSquasherType
 {
   private static final Logger LOG = LoggerFactory.getLogger(EPUBSquasher.class);
 
@@ -44,17 +58,19 @@ final class EPUBSquasher implements EPUBSquasherType
   private final EPUBSquasherConfiguration configuration;
   private final AtomicBoolean squashed;
   private final TreeMap<String, Path> unpacked;
-  private final ImageSquasher image_squasher;
+  private final EPUBImageSquasher image_squasher;
 
-  EPUBSquasher(
+  public EPUBSquasher(
     final EPUBSquasherConfiguration in_configuration)
   {
-    this.configuration = Objects.requireNonNull(
-      in_configuration,
-      "configuration");
-    this.squashed = new AtomicBoolean(false);
-    this.unpacked = new TreeMap<>();
-    this.image_squasher = new ImageSquasher();
+    this.configuration =
+      Objects.requireNonNull(in_configuration, "configuration");
+    this.squashed =
+      new AtomicBoolean(false);
+    this.unpacked =
+      new TreeMap<>();
+    this.image_squasher =
+      new EPUBImageSquasher();
   }
 
   private static void repack(
@@ -131,6 +147,13 @@ final class EPUBSquasher implements EPUBSquasherType
     }
   }
 
+  private static void deleteRecursive(
+    final Path directory)
+    throws IOException
+  {
+    Files.walkFileTree(directory, new EPUBDeletionVisitor(LOG));
+  }
+
   @Override
   public void squash()
     throws IOException
@@ -150,58 +173,14 @@ final class EPUBSquasher implements EPUBSquasherType
 
     try {
       this.runUnpack(temp);
-      this.runImages(this.configuration);
+      this.runImages();
       repack(temp, this.configuration.outputFile());
     } finally {
       deleteRecursive(temp);
     }
   }
 
-  private static void deleteRecursive(
-    final Path directory)
-    throws IOException
-  {
-    Files.walkFileTree(directory, new SimpleFileVisitor<>()
-    {
-      @Override
-      public FileVisitResult visitFile(
-        final Path file,
-        final BasicFileAttributes attrs)
-        throws IOException
-      {
-        LOG.debug("delete {}", file);
-        Files.delete(file);
-        return FileVisitResult.CONTINUE;
-      }
-
-      @Override
-      public FileVisitResult postVisitDirectory(
-        final Path dir,
-        final IOException exc)
-        throws IOException
-      {
-        LOG.debug("delete {}", dir);
-        Files.delete(dir);
-        return FileVisitResult.CONTINUE;
-      }
-    });
-  }
-
-  private static final class ImageSize
-  {
-    int width;
-    int height;
-
-    ImageSize(
-      final int inWidth,
-      final int inHeight)
-    {
-      this.width = inWidth;
-      this.height = inHeight;
-    }
-  }
-
-  private ImageSize calculateImageSize(
+  private EPUBImageSize calculateImageSize(
     final Path path,
     final int width,
     final int height)
@@ -225,16 +204,15 @@ final class EPUBSquasher implements EPUBSquasherType
     LOG.debug(
       "rescaling {}: {}x{} -> {}x{}",
       path,
-      Double.valueOf((double) width),
-      Double.valueOf((double) height),
-      Double.valueOf((double) mWidth),
-      Double.valueOf((double) mHeight));
+      Double.valueOf(width),
+      Double.valueOf(height),
+      Double.valueOf(mWidth),
+      Double.valueOf(mHeight));
 
-    return new ImageSize(mWidth, mHeight);
+    return new EPUBImageSize(mWidth, mHeight);
   }
 
-  private void runImages(
-    final EPUBSquasherConfiguration configuration)
+  private void runImages()
     throws IOException
   {
     for (final var entry : this.unpacked.entrySet()) {
@@ -252,8 +230,8 @@ final class EPUBSquasher implements EPUBSquasherType
           path,
           path.resolveSibling("TMP_" + path.getFileName()),
           path,
-          (double) scaled.width,
-          (double) scaled.height);
+          scaled.width(),
+          scaled.height());
       }
     }
   }
@@ -274,12 +252,12 @@ final class EPUBSquasher implements EPUBSquasherType
           Files.createDirectories(temp);
         } else {
           final var parent = output_path.getParent();
-          if ((parent != null) && ! Files.exists(parent)) {
+          if ((parent != null) && !Files.exists(parent)) {
             LOG.debug("mkdir: {}", parent);
             Files.createDirectories(parent);
           }
           if (entry.getSize() == 0) {
-            if ( ! Files.exists(output_path)) {
+            if (!Files.exists(output_path)) {
               LOG.debug("create empty: {} -> {}", entry.getName(), output_path);
               Files.createFile(output_path);
             }
@@ -304,8 +282,10 @@ final class EPUBSquasher implements EPUBSquasherType
       final Path in_input,
       final String in_name)
     {
-      this.input = Objects.requireNonNull(in_input, "input");
-      this.name = Objects.requireNonNull(in_name, "name");
+      this.input =
+        Objects.requireNonNull(in_input, "input");
+      this.name =
+        Objects.requireNonNull(in_name, "name");
     }
   }
 }
