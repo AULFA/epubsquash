@@ -8,7 +8,7 @@
   <parent>
     <groupId>one.lfa</groupId>
     <artifactId>one.lfa.epubsquash</artifactId>
-    <version>0.0.5</version>
+    <version>1.0.0</version>
   </parent>
 
   <artifactId>one.lfa.epubsquash.api</artifactId>

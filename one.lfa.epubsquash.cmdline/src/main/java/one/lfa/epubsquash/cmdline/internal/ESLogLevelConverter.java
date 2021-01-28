@@ -14,22 +14,37 @@
  * limitations under the License.
  */
 
-package one.lfa.epubsquash.api;
+package one.lfa.epubsquash.cmdline.internal;
+
+import com.beust.jcommander.IStringConverter;
+
+import java.util.Objects;
 
 /**
- * A provider of EPUB squashers.
+ * A converter for {@link ESLogLevel} values.
  */
 
-public interface EPUBSquasherProviderType
+public final class ESLogLevelConverter implements IStringConverter<ESLogLevel>
 {
   /**
-   * Create a new squasher.
-   *
-   * @param configuration The squasher configuration
-   *
-   * @return A new squasher
+   * Construct a new converter.
    */
 
-  EPUBSquasherType createSquasher(
-    EPUBSquasherConfiguration configuration);
+  public ESLogLevelConverter()
+  {
+
+  }
+
+  @Override
+  public ESLogLevel convert(final String value)
+  {
+    for (final var v : ESLogLevel.values()) {
+      if (Objects.equals(value, v.getName())) {
+        return v;
+      }
+    }
+
+    throw new ESLogLevelUnrecognized(
+      "Unrecognized verbosity level: " + value);
+  }
 }

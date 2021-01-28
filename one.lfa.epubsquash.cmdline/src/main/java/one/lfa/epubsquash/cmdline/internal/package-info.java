@@ -15,10 +15,7 @@
  */
 
 /**
- * EPUB squasher (Vanilla implementation)
+ * EPUB squasher (Command-line tools [internals])
  */
 
-@Export
-package one.lfa.epubsquash.vanilla;
-
-import org.osgi.annotation.bundle.Export;
+package one.lfa.epubsquash.cmdline.internal;

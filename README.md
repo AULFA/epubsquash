@@ -1,89 +1,15 @@
 epubsquash
 ===
 
-[![Build Status](https://img.shields.io/travis/AULFA/epubsquash.svg?style=flat-square)](https://travis-ci.org/AULFA/epubsquash)
-[![Maven Central](https://img.shields.io/maven-central/v/one.lfa/one.lfa.epubsquash.png?style=flat-square)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22one.lfa%22)
-[![Maven Central (snapshot)](https://img.shields.io/nexus/s/https/oss.sonatype.org/one.lfa/one.lfa.epubsquash.svg?style=flat-square)](https://oss.sonatype.org/content/repositories/snapshots/one.lfa/)
-
-A tool for making EPUB files smaller.
+[![Maven Central](https://img.shields.io/maven-central/v/one.lfa/one.lfa.epubsquash.svg?style=flat-square)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22one.lfa.epubsquash%22)
+[![Maven Central (snapshot)](https://img.shields.io/nexus/s/https/oss.sonatype.org/one.lfa/one.lfa.epubsquash.svg?style=flat-square)](https://oss.sonatype.org/content/repositories/snapshots/one/lfa/epubsquash/)
+[![Codecov](https://img.shields.io/codecov/c/github/AULFA/epubsquash.svg?style=flat-square)](https://codecov.io/gh/AULFA/epubsquash)
 
 ![epubsquash](./src/site/resources/epubsquash.jpg?raw=true)
 
-## Features
-
-* Squash images in EPUBs to reduce file sizes
-* Well designed modular API for use in Java 11+ programs
-* Command line interface
-
-## Requirements
-
-* Java 11+
-
-## How To Build
-
-```
-$ mvn clean package
-```
-
-If the above fails, it's a bug. Report it!
-
-## Usage
-
-```
-Usage: epubsquash [options] [command] [command options]
-  Options:
-    --verbose
-      Set the minimum logging verbosity level
-      Default: info
-      Possible Values: [trace, debug, info, warn, error]
-  Commands:
-    squash      Squash an EPUB file
-      Usage: squash [options]
-        Options:
-          --image-max-height
-            The maximum height of images
-            Default: 1170.0
-          --image-max-width
-            The maximum width of images
-            Default: 1600.0
-          --image-scale
-            The image scaling value
-            Default: 1.0
-        * --input-file
-            The EPUB file to squash
-        * --output-file
-            The output EPUB file
-          --verbose
-            Set the minimum logging verbosity level
-            Default: info
-            Possible Values: [trace, debug, info, warn, error]
-```
-
-To squash an epub file `/tmp/input.epub`, writing the result to
-`/tmp/output.epub`:
-
-```
-$ java -jar one.lfa.epubsquash.cmdline-0.0.1-main.jar \
-  squash \
-    --input-file /tmp/input.epub \
-    --output-file /tmp/output.epub \
-    --verbose trace
-```
-
-The `epubsquash` package uses [jcommander](http://jcommander.org) to
-parse command line arguments and therefore also supports placing
-command line options into a file that can be referenced with `@`:
-
-```
-$ cat arguments.txt
-squash
---input-file
-/tmp/input.epub
---output-file
-/tmp/output.epub
---verbose
-trace
-
-$ java -jar one.lfa.epubsquash.cmdline-0.0.1-main.jar @arguments.txt
-```
+| JVM             | Platform | Status |
+|-----------------|----------|--------|
+| OpenJDK LTS     | Linux    | [![Build (OpenJDK LTS, Linux)](https://img.shields.io/github/workflow/status/AULFA/epubsquash/main-openjdk_lts-linux)](https://github.com/AULFA/epubsquash/actions?query=workflow%3Amain-openjdk_lts-linux) |
+| OpenJDK Current | Linux    | [![Build (OpenJDK Current, Linux)](https://img.shields.io/github/workflow/status/AULFA/epubsquash/main-openjdk_current-linux)](https://github.com/AULFA/epubsquash/actions?query=workflow%3Amain-openjdk_current-linux)
+| OpenJDK Current | Windows  | [![Build (OpenJDK Current, Windows)](https://img.shields.io/github/workflow/status/AULFA/epubsquash/main-openjdk_current-windows)](https://github.com/AULFA/epubsquash/actions?query=workflow%3Amain-openjdk_current-windows)
 
