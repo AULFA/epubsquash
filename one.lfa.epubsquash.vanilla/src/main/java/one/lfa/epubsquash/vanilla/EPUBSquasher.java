@@ -280,10 +280,16 @@ final class EPUBSquasher implements EPUBSquasherType
               Files.createDirectories(parent);
             }
           }
-
-          LOG.debug("copy: {} -> {}", entry.getName(), output_path);
-          final var input = input_zip.getInputStream(entry);
-          Files.copy(input, output_path, REPLACE_EXISTING);
+          if (entry.getSize() == 0) {
+            if ( ! Files.exists(output_path)) {
+              LOG.debug("create empty: {} -> {}", entry.getName(), output_path);
+              Files.createFile(output_path);
+            }
+          } else {
+            LOG.debug("copy: {} -> {}", entry.getName(), output_path);
+            final var input = input_zip.getInputStream(entry);
+            Files.copy(input, output_path, REPLACE_EXISTING);
+          }
         }
 
         this.unpacked.put(entry.getName(), output_path);
